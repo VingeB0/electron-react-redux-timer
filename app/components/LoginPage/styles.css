@@ -1,0 +1,257 @@
+.loginPage {
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loginPage h2 {
+  font-size: 50px;
+}
+
+.loginPage__form {
+  max-width: 350px;
+  width: 100%;
+}
+
+.inputWrap {
+  position: relative;
+  padding-top: 24px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inputWrap input {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  font-weight: 600;
+  outline: transparent;
+}
+
+svg.inputFilledSvg,
+.inputWrap input:focus ~ svg {
+  stroke: #fff;
+  -webkit-transform: translate3d(-66.6%, 0, 0);
+  transform: translate3d(-66.6%, 0, 0);
+}
+
+.inputWrap label {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  font-size: 18px;
+  pointer-events: none;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transition: -webkit-transform 0.2s 0.15s, color 1s, bottom .2s linear;
+  transition: transform 0.2s 0.15s, color 1s, bottom .2s linear;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+label.inputFilledLabel,
+.inputWrap input:focus ~ label {
+  bottom: 0;
+  color: #fff;
+  -webkit-transform: translate3d(0, -1.25em, 0) scale3d(0.75, 0.75, 1);
+  transform: translate3d(0, -1.25em, 0) scale3d(0.75, 0.75, 1);
+}
+
+.inputWrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: none;
+  stroke: #fff;
+  pointer-events: none;
+  -webkit-transition: -webkit-transform 0.7s, stroke 0.7s;
+  transition: transform 0.7s, stroke 0.7s;
+  -webkit-transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
+  transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
+}
+
+.loginPage__btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 200px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 14px 0;
+  background: #0962EA;
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #0962EA), color-stop(100%, #0AA0F6));
+  background-image: -moz-linear-gradient(left, #0962EA, #0AA0F6);
+  background-image: -webkit-linear-gradient(left, #0962EA, #0AA0F6);
+  background-image: linear-gradient(to right, #0962EA, #0AA0F6);
+  -moz-border-radius: 1.5em;
+  -webkit-border-radius: 1.5em;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  color: rgba(255, 255, 255, .8);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  outline: none;
+  overflow: hidden;
+  -moz-transition: opacity 300ms;
+  -o-transition: opacity 300ms;
+  -webkit-transition: opacity 300ms;
+  transition: opacity 300ms;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.loginPage__btn:after,
+.loginPage__btn:before {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.loginPage__btn:after {
+  -moz-box-shadow: rgba(212, 207, 201, 0.75) 0 0 15px 2px;
+  -webkit-box-shadow: rgba(212, 207, 201, 0.75) 0 0 15px 2px;
+  box-shadow: rgba(212, 207, 201, 0.75) 0 0 15px 2px;
+  background: #fff;
+  content: "";
+  height: 2px;
+  opacity: 0;
+}
+
+.loginPage__btn:before {
+  content: "";
+  opacity: 0;
+}
+
+.loginPage__btn:hover {
+  -webkit-animation: glitch 750ms infinite;
+}
+
+.loginPage__btn:hover:before {
+  opacity: 1;
+}
+
+.loginPage__btn:hover:after {
+  -webkit-animation: scan 2s infinite;
+  opacity: 1;
+}
+
+@-webkit-keyframes glitch {
+  0% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+  }
+  5% {
+    -moz-transform: skewX(2deg);
+    -ms-transform: skewX(2deg);
+    -webkit-transform: skewX(2deg);
+    transform: skewX(2deg);
+    opacity: 0.75;
+  }
+  10% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  15% {
+    -moz-transform: skewX(-5deg);
+    -ms-transform: skewX(-5deg);
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+    opacity: 0.75;
+  }
+  20% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  45% {
+    -moz-transform: skewX(3deg);
+    -ms-transform: skewX(3deg);
+    -webkit-transform: skewX(3deg);
+    transform: skewX(3deg);
+    opacity: 0.75;
+  }
+  50% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  55% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 0.75;
+  }
+  60% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  75% {
+    -moz-transform: skewX(2deg);
+    -ms-transform: skewX(2deg);
+    -webkit-transform: skewX(2deg);
+    transform: skewX(2deg);
+  }
+  80% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+  }
+  85% {
+    -moz-transform: skewX(-8deg);
+    -ms-transform: skewX(-8deg);
+    -webkit-transform: skewX(-8deg);
+    transform: skewX(-8deg);
+    opacity: 0.75;
+  }
+  90% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  100% {
+    -moz-transform: skewX(0deg);
+    -ms-transform: skewX(0deg);
+    -webkit-transform: skewX(0deg);
+    transform: skewX(0deg);
+  }
+}
+
+@-webkit-keyframes scan {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 97%;
+  }
+  100% {
+    top: 0%;
+  }
+}
