@@ -6,7 +6,7 @@ import HomePage from '../HomePage';
 
 type Props = {};
 
-export default class Index extends Component<Props> {
+class Index extends Component<Props> {
   props: Props;
 
   state = {
@@ -54,9 +54,11 @@ export default class Index extends Component<Props> {
             <button className={styles.loginPage__btn}>Sign in</button>
           </form>
         </div>
-        <Link to="/COUNTER">go to Counter page</Link>
-        <Link to="/HomePage">go to Home Page</Link>
+        <Link to="/counter">go to Counter page</Link>
+        <Link to="/home">go to Home Page</Link>
       </div>
     );
   }
 }
+
+export default Index;

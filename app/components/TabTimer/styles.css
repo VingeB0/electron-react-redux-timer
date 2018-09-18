@@ -1,0 +1,153 @@
+.tabTimer {
+}
+
+.timer {
+  display: flex;
+  flex-flow: nowrap row;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: auto;
+  -webkit-box-shadow: 0px 0px 41px 2px rgba(0,0,0,0.66);
+  -moz-box-shadow: 0px 0px 41px 2px rgba(0,0,0,0.66);
+  box-shadow: 0px 0px 41px 2px rgba(0,0,0,0.66);
+}
+
+.timer__left {
+  text-align: center;
+}
+
+.timer__counter {
+  font-size: 86px;
+  line-height: 84px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.timer__controls {
+  display: flex;
+  flex-flow: nowrap row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+}
+
+.timer__controls span {
+  font-size: 26px;
+}
+
+.timer__controls button {
+  margin-right: 6px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+.timer__controls i {
+  font-size: 50px;
+}
+
+.updateData {
+  display: inline-block;
+  line-height: 18px;
+}
+
+.updateData i {
+  margin-right: 10px;
+}
+
+.updateData button {
+  padding: 0;
+  font-size: 18px;
+  line-height: 18px;
+  border: 0;
+  background-color: transparent;
+  outline: 0;
+  color: #fff;
+  cursor: pointer;
+  transition: color .2s linear;
+}
+
+.updateData button:hover {
+  color: rgb(0, 188, 212);
+}
+
+.updateData,
+.selectTask,
+.selectProject {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.tasks {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.tasks__todayRow {
+  display: flex;
+  align-items: center;
+}
+
+.tasks__todayRow > span:nth-child(1) {
+  max-width: 70px;
+  width: 100%;
+}
+
+.tasks__todayRow > span:nth-child(2) {
+
+}
+
+.tasks__today {
+  padding-top: 0px;
+  border-top: 1px solid #ccc;
+  color: #fff;
+}
+
+.tasks__todayDate {
+  color: rgba(255, 255, 255, .6)
+}
+
+.tasks__todayTotal {
+  margin-bottom: 6px;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.tasks__todayTasks {
+  padding: 6px 0;
+  border-top: 1px solid #ccc;
+}
+
+.tasks__todayTasks > span:nth-child(2) {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.tasks__todayTasks:last-of-type {
+  border-bottom: 1px solid #ccc;
+}
+
+.tasks__todayTask {
+
+}
+
+.tasks__todayFromTo {
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: center;
+  margin-left: auto;
+  max-width: 70px;
+  width: 100%;
+  color: #fff;
+  font-size: 16px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.tasks__todayFromTo span:nth-child(2) {
+  line-height: 6px;
+}
