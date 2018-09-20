@@ -2,11 +2,8 @@ import React from 'react';
 
 export default (Component) => class Accordion extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      openTab : 'TabTimer'
-    }
+  state = {
+    openTab : 'TabTimer'
   }
 
   render() {

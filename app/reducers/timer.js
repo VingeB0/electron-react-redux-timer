@@ -1,12 +1,11 @@
 // @flow
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../constants';
-import type { Action } from './types';
+import { START_TIMER, STOP_TIMER } from '../constants';
 
 export default function counter(state: number = 0, action: Action) {
   switch (action.type) {
-    case INCREMENT_COUNTER:
+    case START_TIMER:
       return state + 1;
-    case DECREMENT_COUNTER:
+    case STOP_TIMER:
       return state - 1;
     default:
       return state;

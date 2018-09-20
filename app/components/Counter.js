@@ -15,7 +15,13 @@ type Props = {
 export default class Counter extends Component<Props> {
   props: Props;
 
+  componentDidMount() {
+    this.props.increment()
+  }
+
   render() {
+    console.log('couner rendered')
+    console.log(this)
     const {
       increment,
       incrementIfOdd,

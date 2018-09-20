@@ -1,0 +1,29 @@
+.updateData {
+  display: inline-block;
+  line-height: 18px;
+}
+
+.updateData i {
+  margin-right: 10px;
+}
+
+.updateData button {
+  padding: 0;
+  font-size: 18px;
+  line-height: 18px;
+  border: 0;
+  background-color: transparent;
+  outline: 0;
+  color: #fff;
+  cursor: pointer;
+  transition: color .2s linear;
+}
+
+.updateData button:hover {
+  color: rgb(0, 188, 212);
+}
+
+.updateData {
+  margin-top: 10px;
+  cursor: pointer;
+}

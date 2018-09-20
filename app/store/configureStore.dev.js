@@ -6,6 +6,9 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
 import type { counterStateType } from '../reducers/types';
+//custom middleware to generate current time
+import currentTime from "../middlewares/currentTime.js";
+import api from "../middlewares/api.js";
 
 const history = createHashHistory();
 
@@ -16,6 +19,9 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Thunk Middleware
   middleware.push(thunk);
+
+  // Custom Middleware
+  middleware.push(api);
 
   // Logging Middleware
   const logger = createLogger({
@@ -53,6 +59,9 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Create Store
   const store = createStore(rootReducer, initialState, enhancer);
+
+  // for debug store
+  window.store = store;
 
   if (module.hot) {
     module.hot.accept(

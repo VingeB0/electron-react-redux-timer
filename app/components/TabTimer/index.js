@@ -1,53 +1,77 @@
 // @flow
 import React, { Component } from 'react';
 import styles from './styles.css';
-import Select from 'react-select';
-import { selectProjects, selectTasks } from '../../data.js';
+import {loadAllProjects, loadAllTasks} from '../../actions';
+import {formatTime} from '../../utils'
+import {connect} from 'react-redux'
+import UpdateBtn from './UpdateBtn'
+import SelectProject from './SelectProject'
+import SelectTask from './SelectTask'
 
 class TabTimer extends Component<Props> {
   props: Props;
 
   state = {
     timerBtn: 'pause',
-    isSearchable: true,
-    isClearable: true
+    totalSeconds: 0
   };
 
+  // componentDidMount() {
+  //   const {loadAllProjects, loadAllTasks} = this.props;
+  //   loadAllProjects();
+  //   loadAllTasks();
+  //
+  //
+  //   setInterval(() => {
+  //     loadAllProjects();
+  //     loadAllTasks();
+  //   }, 600000);
+  // }
+
   handleTimer = ev => {
-    console.log('3213');
+    // console.log('handleTimer');
     this.setState({
       timerBtn: this.state.timerBtn === 'start' ? 'pause' : 'start'
     });
+    this.state.timerBtn === 'start' ? this.handleStopTimer() : this.handleStartTimer()
+  };
+
+  handleStartTimer = () => {
+    // console.log('start timer');
+    this.interval = setInterval(() => {
+      // console.log(this.state);
+      this.setState({
+        totalSeconds: this.state.totalSeconds + 1
+      })
+    }, 1000);
+  };
+
+  handleStopTimer = () => {
+    // console.log('stop timer');
+    clearInterval(this.interval)
+    this.setState({
+      totalSeconds: 0
+    })
   };
 
   render() {
-
-    const customStyles = {
-      option: (base) => ({
-        ...base,
-        borderBottom: '1px dotted pink',
-        color: '#000',
-        paddingTop: 2,
-        paddingBottom: 2,
-        paddingLeft: 8,
-        paddingRight: 8,
-        cursor: 'pointer'
-      })
-    };
-
+    // console.log('TAB TIMER RENDERED')
     const { isOpen } = this.props;
     const {
       timerBtn,
-      isClearable,
-      isSearchable
+      totalSeconds
     } = this.state;
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+    const seconds = totalSeconds - (hours*3600 + minutes * 60);
 
     if (!isOpen) return null;
     return (
       <div className={styles.tabTimer}>
         <div className={styles.timer}>
           <div className={styles.timer__counter}>
-            00:00
+            {`${formatTime(hours)} : ${formatTime(minutes)} : ${formatTime(seconds)}`}
           </div>
           <div className={styles.timer__controls}>
             <button onClick={this.handleTimer}>
@@ -60,34 +84,11 @@ class TabTimer extends Component<Props> {
           </div>
         </div>
 
-        <div className={styles.updateData}>
-          <button title="update data">
-            <i className="fas fa-sync-alt"></i>
-            <span>Update data</span>
-          </button>
-        </div>
+        <UpdateBtn/>
 
-        <div className={styles.selectProject}>
-          <Select
-            styles={customStyles}
-            placeholder="Select project"
-            isClearable={isClearable}
-            isSearchable={isSearchable}
-            name="project"
-            options={selectProjects}
-          />
-        </div>
+        <SelectProject/>
 
-        <div className={styles.selectTask}>
-          <Select
-            styles={customStyles}
-            placeholder="Select task"
-            isClearable={isClearable}
-            isSearchable={isSearchable}
-            name="project"
-            options={selectTasks}
-          />
-        </div>
+        <SelectTask/>
 
         <div className={styles.tasks}>
           <div className={styles.tasks__today}>
@@ -164,4 +165,4 @@ class TabTimer extends Component<Props> {
   }
 }
 
-export default TabTimer;
+export default connect(null, {loadAllProjects, loadAllTasks})(TabTimer)
