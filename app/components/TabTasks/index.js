@@ -6,8 +6,8 @@ class TabTasks extends Component<Props> {
   props: Props;
 
   render() {
-    console.log('TAB TASKS');
-    console.log(this.props);
+    // console.log('TAB TASKS');
+    // console.log(this.props);
     const {isOpen} = this.props;
 
     if(!isOpen) return null;

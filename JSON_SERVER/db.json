@@ -1,0 +1,56 @@
+{
+  "selectProjects": [
+      {
+        "value": "First project 12",
+        "id": "12",
+        "tasks": ["q12", "eq12"]
+      },
+      {
+        "value": "Project is number second 132",
+        "id": "132",
+        "tasks": ["w132", "ad132"]
+      },
+      {
+        "value": "Project TRI 22",
+        "id": "22",
+        "tasks": ["e22", "ew22", "das22"]
+      }
+  ],
+  "selectTasks": [
+    {
+      "id": "q12",
+      "name": "task from project 12",
+      "info": "Commodo qui incvaluevalueunt"
+    },
+    {
+      "id": "w132",
+      "name": "task from project 132",
+      "info": "Quis occaecat"
+    },
+    {
+      "id": "e22",
+      "name": "task from project 22",
+      "info": "Hello my new world"
+    },
+    {
+      "id": "ew22",
+      "name": "task from project 22",
+      "info": "Voluptate est officia"
+    },
+    {
+      "id": "eq12",
+      "name": "task from project 12",
+      "info": "Ex sunt sunt aliqua"
+    },
+    {
+      "id": "ad132",
+      "name": "task from project 132",
+      "info": "Commodo laborum sit nostru"
+    },
+    {
+      "id": "das22",
+      "name": "task from project 22",
+      "info": "Lorem Ipsum dolor"
+    }
+  ]
+}

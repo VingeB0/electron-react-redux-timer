@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import styles from './styles.css';
-import {loadAllProjects, loadAllTasks} from '../../actions';
+import {loadAllProjects, loadAllTasks, stopTimer, startTimer} from '../../actions';
 import {formatTime} from '../../utils'
 import {connect} from 'react-redux'
 import UpdateBtn from './UpdateBtn'
@@ -16,18 +16,6 @@ class TabTimer extends Component<Props> {
     totalSeconds: 0
   };
 
-  // componentDidMount() {
-  //   const {loadAllProjects, loadAllTasks} = this.props;
-  //   loadAllProjects();
-  //   loadAllTasks();
-  //
-  //
-  //   setInterval(() => {
-  //     loadAllProjects();
-  //     loadAllTasks();
-  //   }, 600000);
-  // }
-
   handleTimer = ev => {
     // console.log('handleTimer');
     this.setState({
@@ -37,9 +25,11 @@ class TabTimer extends Component<Props> {
   };
 
   handleStartTimer = () => {
-    // console.log('start timer');
+    const { startTimer } = this.props;
+    startTimer();
+    console.log('start timer');
     this.interval = setInterval(() => {
-      // console.log(this.state);
+      console.log(this.state);
       this.setState({
         totalSeconds: this.state.totalSeconds + 1
       })
@@ -47,7 +37,9 @@ class TabTimer extends Component<Props> {
   };
 
   handleStopTimer = () => {
-    // console.log('stop timer');
+    const { stopTimer } = this.props;
+    stopTimer();
+    console.log('stop timer');
     clearInterval(this.interval)
     this.setState({
       totalSeconds: 0
@@ -165,4 +157,4 @@ class TabTimer extends Component<Props> {
   }
 }
 
-export default connect(null, {loadAllProjects, loadAllTasks})(TabTimer)
+export default connect(null, {loadAllProjects, loadAllTasks, stopTimer, startTimer})(TabTimer)

@@ -8,8 +8,8 @@ export default store => next => action => {
   fetch(callAPI)
     .then(res => res.json())
     .then(response => {
-      console.log('response');
-      console.log(response);
+      // console.log('response');
+      // console.log(response);
       next({...rest, type: type, response})
     })
     .catch(error => ({...rest, type: type, error}))

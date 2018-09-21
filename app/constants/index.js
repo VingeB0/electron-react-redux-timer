@@ -8,6 +8,7 @@ export const LOAD_ALL_PROJECTS = 'LOAD_ALL_PROJECTS';
 export const LOAD_ALL_TASKS = 'LOAD_ALL_TASKS';
 
 export const SELECT_PROJECT = 'SELECT_PROJECT';
+export const SELECT_TASK = 'SELECT_TASK';
 export const LOAD_TASKS_BY_PROJECT = 'LOAD_TASKS_BY_PROJECT';
 
 export const START = '_START';

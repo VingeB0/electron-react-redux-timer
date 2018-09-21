@@ -5,6 +5,7 @@ import {
   LOAD_ALL_PROJECTS,
   LOAD_ALL_TASKS,
   SELECT_PROJECT,
+  SELECT_TASK,
   LOAD_TASKS_BY_PROJECT,
   START,
   FAIL,
@@ -18,7 +19,7 @@ export function startTimer() {
   }
 }
 
-export function stopTimer(dateRange) {
+export function stopTimer() {
   return {
     type: STOP_TIMER,
     currentTime: true
@@ -46,9 +47,16 @@ export function selectProject(project) {
   }
 }
 
-export function loadTasksByProject(id) {
+export function selectTask(task) {
+  return {
+    type: SELECT_TASK,
+    payload: {task}
+  }
+}
+
+export function loadTasksByProject(tasksId) {
   return {
     type: LOAD_TASKS_BY_PROJECT,
-    payload: {id}
+    payload: {tasksId}
   }
 }

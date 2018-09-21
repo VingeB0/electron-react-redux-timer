@@ -1,34 +1,28 @@
 // @flow
 import React, { Component } from 'react';
 import styles from './styles.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Select from 'react-select';
-import {loadAllProjects, selectProject, loadTasksByProject} from '../../../actions';
+import { loadAllProjects, selectProject, loadTasksByProject } from '../../../actions';
 
 class SelectProject extends Component<Props> {
   props: Props;
 
   state = {
     isSearchable: true,
-    isClearable: true,
+    isClearable: true
   };
 
   componentDidMount() {
-    const {loadAllProjects} = this.props;
+    const { loadAllProjects } = this.props;
     loadAllProjects();
   }
 
   handleChange = (selected) => {
-    const {selectProject, loadTasksByProject, currentProject} = this.props;
-    // this.props.changeSelection(selected.map(option => option.value));
-    // console.log(selected)
-    // console.log('SSSSSSSSSSSSSSSss')
+    const { selectProject, loadTasksByProject } = this.props;
+    // console.log(selected);
     selectProject(selected);
-    console.log('SSEEEELLLLEEEECCCCTTTTEEEDDD')
-    console.log(selected)
-    console.log(selected.value)
-    // console.log(selected.map(option => option.value))
-    loadTasksByProject(selected.value);
+    loadTasksByProject(selected.tasksId);
   };
 
   render() {
@@ -38,7 +32,7 @@ class SelectProject extends Component<Props> {
 
     const {
       isClearable,
-      isSearchable,
+      isSearchable
     } = this.state;
 
     const customStyles = {
@@ -57,33 +51,21 @@ class SelectProject extends Component<Props> {
     const selectOptions = projects.map(function(project) {
       return {
         label: project.value,
-        value: project.id
-      }
+        value: project.id,
+        tasksId: project.tasks
+      };
     });
 
-    // console.log('select projects rendered');
-    // console.log(this)
-    // console.log(this.props)
-    // console.log(this.props.projects)
-    // console.log('11111111111111111111111111')
-    // console.log('11111111111111111111111111')
-    // console.log('11111111111111111111111111')
-    // console.log('11111111111111111111111111')
-    // console.log(this.props.currentProject)
-    // console.log(this.props.currentProject.value)
-
-    // console.log('*******************');
-    // console.log(selectOptions);
     return (
       <div className={styles.selectProject}>
         <Select
           options={selectOptions}
+          defaultValue={selectOptions[0]}
           styles={customStyles}
           placeholder="Select project"
           isClearable={isClearable}
           isSearchable={isSearchable}
           name="project"
-          multi={false}
           onChange={this.handleChange}
         />
       </div>
@@ -91,13 +73,12 @@ class SelectProject extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
+export default connect(state => ({
     projects: state.projects
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  {loadAllProjects, selectProject, loadTasksByProject}
+  }),
+  {
+    loadAllProjects,
+    selectProject,
+    loadTasksByProject
+  }
 )(SelectProject);

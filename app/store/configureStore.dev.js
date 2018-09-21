@@ -22,6 +22,7 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Custom Middleware
   middleware.push(api);
+  middleware.push(currentTime);
 
   // Logging Middleware
   const logger = createLogger({

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styles from './styles.css';
 import {connect} from 'react-redux';
 import Select from 'react-select';
-import {loadAllTasks} from '../../../actions';
+import {loadAllTasks, selectTask} from '../../../actions';
 
 class SelectTask extends Component<Props> {
   props: Props;
@@ -11,6 +11,7 @@ class SelectTask extends Component<Props> {
   state = {
     isSearchable: true,
     isClearable: true,
+    selectOptions: null
   };
 
   componentDidMount() {
@@ -18,7 +19,13 @@ class SelectTask extends Component<Props> {
     loadAllTasks();
   }
 
+  handleChange = (selected) => {
+    const { selectTask } = this.props;
+    selectTask(selected);
+  };
+
   render() {
+    console.log('select task rendered');
     const {
       tasks
     } = this.props;
@@ -41,29 +48,25 @@ class SelectTask extends Component<Props> {
       })
     };
 
-    // const selectOptions = tasks.map(function(task) {
-    //   return {
-    //     label: task.name,
-    //     value: task.id
-    //   }
-    // });
+    const selectOptions = tasks.map(function(task) {
+      return {
+        label: task.name,
+        value: task.id,
+        info: task.info
+      };
+    });
 
-    // console.log('select tasks rendered');
-    // console.log(this);
-    // console.log(this.props);
-    // console.log(this.props.tasks);
-
-    // console.log('*******************');
-    // console.log(selectOptions);
     return (
       <div className={styles.selectTask}>
         <Select
-          // options={selectOptions}
+          options={selectOptions}
+          defaultValue={selectOptions[0]}
           styles={customStyles}
           placeholder="Select task"
           isClearable={isClearable}
           isSearchable={isSearchable}
           name="task"
+          onChange={this.handleChange}
         />
       </div>
     );
@@ -72,11 +75,14 @@ class SelectTask extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks
+    tasks: state.tasks.groupedTasks
   };
 }
 
 export default connect(
   mapStateToProps,
-  {loadAllTasks}
+  {
+    loadAllTasks,
+    selectTask
+  }
 )(SelectTask);

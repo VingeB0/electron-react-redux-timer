@@ -1,13 +1,26 @@
 // @flow
 import { START_TIMER, STOP_TIMER } from '../constants';
 
-export default function counter(state: number = 0, action: Action) {
+const defaultTimerState = {
+  time_start: '',
+  time_end: ''
+};
+
+export default function (timerState = defaultTimerState, action) {
+  const {type, currentTime} = action;
+
   switch (action.type) {
     case START_TIMER:
-      return state + 1;
+      return {
+        ...timerState,
+        time_start: currentTime
+      };
     case STOP_TIMER:
-      return state - 1;
+      return {
+        ...timerState,
+        time_end: currentTime
+      };
     default:
-      return state;
+      return timerState;
   }
 }

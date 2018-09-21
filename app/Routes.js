@@ -11,10 +11,10 @@ import LoginPage from './components/LoginPage';
 export default () => (
   <App>
     <Switch>
-      <Route exact path="/" component={LoginPage} />
+      <Route exact path="/home" component={LoginPage} />
       <Route exact path="/counter" component={CounterPage} />
       {/*<Route path={routes.HOME} component={HomePage} />*/}
-      <Route exact path="/home" component={HomePage} />
+      <Route exact path="/" component={HomePage} />
     </Switch>
   </App>
 );
