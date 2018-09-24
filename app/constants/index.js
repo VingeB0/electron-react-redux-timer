@@ -11,6 +11,10 @@ export const SELECT_PROJECT = 'SELECT_PROJECT';
 export const SELECT_TASK = 'SELECT_TASK';
 export const LOAD_TASKS_BY_PROJECT = 'LOAD_TASKS_BY_PROJECT';
 
+export const START_WRITE_TO_FILE = 'START_WRITE_TO_FILE';
+export const SYNCHRO_WRITE_TO_FILE = 'SYNCHRO_WRITE_TO_FILE';
+export const END_WRITE_TO_FILE = 'END_WRITE_TO_FILE';
+
 export const START = '_START';
 export const SUCCESS = '_SUCCESS';
 export const FAIL = '_FAIL';

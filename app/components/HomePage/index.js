@@ -11,32 +11,6 @@ class HomePage extends Component<Props> {
   props: Props;
 
   render() {
-    var Datastore = require('nedb'), db = new Datastore({ filename: 'test.db' });
-
-    db.loadDatabase(function (error) {
-      if (error) {
-        console.log('FATAL: local database could not be loaded. Caused by: ' + error);
-        throw error;
-      }
-      console.log('INFO: local database loaded successfully.');
-    });
-
-// creating the object with new, just to make it clear.
-// var doc = {hello: 'world'}; should work too.
-    function myDoc(greeting)
-    {
-      this.hello=greeting;
-    }
-    var doc = new myDoc('worfefld');
-
-    db.insert(doc, function (error, newDoc) {
-      if (error) {
-        console.log('ERROR: saving document: ' + JSON.stringify(doc) + '. Caused by: ' + error);
-        throw error;
-      }
-      console.log('INFO: successfully saved document: ' + JSON.stringify(newDoc));
-    });
-
     // console.log('PROPS', this.props);
     const {openTab, toggleOpenItem} = this.props;
     return (
@@ -46,7 +20,9 @@ class HomePage extends Component<Props> {
         </Link>
         <div className={styles.home__title}>
           <div className={styles.logo}>
-            <img src="https://placeimg.com/500/500/nature" title="logo rexit timer" alt="logo rexit timer"/>
+            <a href="http://rexit.info/">
+              <img src="https://placeimg.com/500/500/animals" title="logo rexit timer" alt="logo rexit timer"/>
+            </a>
           </div>
           <h1>RexIt <span>Task recorder</span></h1>
         </div>

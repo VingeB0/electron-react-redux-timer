@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import styles from './styles.css';
-import {loadAllProjects, loadAllTasks, stopTimer, startTimer} from '../../actions';
+import {stopTimer, startTimer, startWriteToFile, synchroWriteToFile, endWriteToFile} from '../../actions';
 import {formatTime} from '../../utils'
 import {connect} from 'react-redux'
 import UpdateBtn from './UpdateBtn'
@@ -25,7 +25,7 @@ class TabTimer extends Component<Props> {
   };
 
   handleStartTimer = () => {
-    const { startTimer } = this.props;
+    const { startTimer, startWriteToFile, currentProject, currentTasks } = this.props;
     startTimer();
     console.log('start timer');
     this.interval = setInterval(() => {
@@ -34,21 +34,31 @@ class TabTimer extends Component<Props> {
         totalSeconds: this.state.totalSeconds + 1
       })
     }, 1000);
+    startWriteToFile(
+      currentProject.label,
+      currentProject.value,
+      currentTasks.label,
+      currentTasks.value,
+      currentTasks.info
+    )
   };
 
   handleStopTimer = () => {
-    const { stopTimer } = this.props;
+    const { stopTimer, endWriteToFile } = this.props;
     stopTimer();
     console.log('stop timer');
-    clearInterval(this.interval)
+    clearInterval(this.interval);
     this.setState({
       totalSeconds: 0
-    })
+    });
+    endWriteToFile();
   };
 
   render() {
-    // console.log('TAB TIMER RENDERED')
-    const { isOpen } = this.props;
+    // console.log('TAB TIMER RENDERED');
+    const {
+      isOpen
+    } = this.props;
     const {
       timerBtn,
       totalSeconds
@@ -157,4 +167,8 @@ class TabTimer extends Component<Props> {
   }
 }
 
-export default connect(null, {loadAllProjects, loadAllTasks, stopTimer, startTimer})(TabTimer)
+export default connect((state) => ({
+  currentProject: state.currentProject,
+  currentTasks: state.currentTasks
+}),
+{stopTimer, startTimer, startWriteToFile, synchroWriteToFile, endWriteToFile})(TabTimer)

@@ -7,6 +7,9 @@ import {
   SELECT_PROJECT,
   SELECT_TASK,
   LOAD_TASKS_BY_PROJECT,
+  START_WRITE_TO_FILE,
+  SYNCHRO_WRITE_TO_FILE,
+  END_WRITE_TO_FILE,
   START,
   FAIL,
   SUCCESS
@@ -58,5 +61,29 @@ export function loadTasksByProject(tasksId) {
   return {
     type: LOAD_TASKS_BY_PROJECT,
     payload: {tasksId}
+  }
+}
+
+export function startWriteToFile(projectName, projectId, taskName, taskId, taskInfo, startTime) {
+  return {
+    type: START_WRITE_TO_FILE,
+    writeFile: 'start',
+    payload: {projectName, projectId, taskName, taskId, taskInfo, startTime}
+  }
+}
+
+export function synchroWriteToFile(endTime) {
+  return {
+    type: SYNCHRO_WRITE_TO_FILE,
+    writeFile: 'synchro',
+    payload: {endTime}
+  }
+}
+
+export function endWriteToFile(endTime) {
+  return {
+    type: END_WRITE_TO_FILE,
+    writeFile: 'end',
+    payload: {endTime}
   }
 }
