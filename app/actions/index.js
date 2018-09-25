@@ -15,17 +15,20 @@ import {
   SUCCESS
 } from '../constants';
 
-export function startTimer() {
+export function startTimer(projectName, projectId, taskName, taskId, taskInfo) {
   return {
     type: START_TIMER,
-    currentTime: true
+    currentTime: true,
+    writeFile: 'start',
+    payload: {projectName, projectId, taskName, taskId, taskInfo}
   }
 }
 
 export function stopTimer() {
   return {
     type: STOP_TIMER,
-    currentTime: true
+    currentTime: true,
+    writeFile: 'end'
   }
 }
 
@@ -64,14 +67,6 @@ export function loadTasksByProject(tasksId) {
   }
 }
 
-export function startWriteToFile(projectName, projectId, taskName, taskId, taskInfo, startTime) {
-  return {
-    type: START_WRITE_TO_FILE,
-    writeFile: 'start',
-    payload: {projectName, projectId, taskName, taskId, taskInfo, startTime}
-  }
-}
-
 export function synchroWriteToFile(endTime) {
   return {
     type: SYNCHRO_WRITE_TO_FILE,
@@ -80,10 +75,3 @@ export function synchroWriteToFile(endTime) {
   }
 }
 
-export function endWriteToFile(endTime) {
-  return {
-    type: END_WRITE_TO_FILE,
-    writeFile: 'end',
-    payload: {endTime}
-  }
-}

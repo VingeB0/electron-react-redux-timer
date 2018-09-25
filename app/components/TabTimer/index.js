@@ -7,13 +7,15 @@ import {connect} from 'react-redux'
 import UpdateBtn from './UpdateBtn'
 import SelectProject from './SelectProject'
 import SelectTask from './SelectTask'
+import { db, doc } from '../../config';
 
 class TabTimer extends Component<Props> {
   props: Props;
 
   state = {
     timerBtn: 'pause',
-    totalSeconds: 0
+    totalSeconds: 0,
+    count: 0
   };
 
   handleTimer = ev => {
@@ -25,34 +27,103 @@ class TabTimer extends Component<Props> {
   };
 
   handleStartTimer = () => {
-    const { startTimer, startWriteToFile, currentProject, currentTasks } = this.props;
-    startTimer();
+    const { startTimer, stopTimer, currentProject, currentTask, timer } = this.props;
+    startTimer(
+      currentProject.label,
+      currentProject.value,
+      currentTask.label,
+      currentTask.value,
+      currentTask.info,
+      timer.time_start
+    );
+    console.log(this.props)
     console.log('start timer');
-    this.interval = setInterval(() => {
-      console.log(this.state);
+    this.intervalTimer = setInterval(() => {
+      // console.log(this.state);
       this.setState({
         totalSeconds: this.state.totalSeconds + 1
       })
     }, 1000);
-    startWriteToFile(
-      currentProject.label,
-      currentProject.value,
-      currentTasks.label,
-      currentTasks.value,
-      currentTasks.info
-    )
+
+    this.intervalWriteFile = setInterval(() => {
+      console.log(this.state);
+      stopTimer();
+    }, 10000);
+
+    console.log('*********************************')
+    console.log(timer)
+    console.log(timer.time_start)
+    console.log(this.props.timer.time_start)
+    console.log('*********************************')
   };
 
   handleStopTimer = () => {
     const { stopTimer, endWriteToFile } = this.props;
     stopTimer();
     console.log('stop timer');
-    clearInterval(this.interval);
+    clearInterval(this.intervalTimer);
+    clearInterval(this.intervalWriteFile);
     this.setState({
       totalSeconds: 0
     });
-    endWriteToFile();
   };
+
+  handleUpp = () => {
+    var doc = { field1: 0
+    };
+
+    db.insert(doc, function (err, newDoc) {
+    });
+
+    db.loadDatabase(function (error) {
+      if (error) {
+        console.log('FATAL: local database could not be loaded. Caused by: ' + error);
+        throw error;
+      }
+      console.log('INFO: local database loaded successfully.');
+      console.log('*********');
+    });
+    console.log(this.state.count);
+
+    db.find({}, function (err, docs) {
+      if(!err) {
+        console.log(docs);
+      }
+    });
+  }
+
+  handleUp = () => {
+    db.loadDatabase(function (error) {
+      if (error) {
+        console.log('FATAL: local database could not be loaded. Caused by: ' + error);
+        throw error;
+      }
+      console.log('INFO: local database loaded successfully.');
+      console.log('*********');
+    });
+    console.log(this.state.count);
+    let file = this.state.count;
+    // db.update({ planet: 'Jupiter' }, { planet: 'Pluton'}, {}, function (err, numReplaced) {
+
+      db.update({ field1: this.state.count + 1 }, { field1: this.state.count + 1 }, {multi: true}, function (error) {
+      if(!error) {
+        console.log("updated");
+        console.log('*********');
+      }
+    });
+
+    db.find({}, function (err, docs) {
+      if(!err) {
+        console.log(docs);
+      }
+    });
+
+    this.setState({
+      count: this.state.count + 1
+    });
+    console.log('****************************')
+    console.log(this.state.count)
+  }
 
   render() {
     // console.log('TAB TIMER RENDERED');
@@ -85,6 +156,14 @@ class TabTimer extends Component<Props> {
             </button>
           </div>
         </div>
+
+        <button onClick={this.handleUpp}>
+          <h1>QQQ create</h1>
+        </button>
+
+        <button onClick={this.handleUp}>
+          <h1>QQQ</h1>
+        </button>
 
         <UpdateBtn/>
 
@@ -169,6 +248,7 @@ class TabTimer extends Component<Props> {
 
 export default connect((state) => ({
   currentProject: state.currentProject,
-  currentTasks: state.currentTasks
+  currentTask: state.currentTask,
+  timer: state.timer
 }),
 {stopTimer, startTimer, startWriteToFile, synchroWriteToFile, endWriteToFile})(TabTimer)

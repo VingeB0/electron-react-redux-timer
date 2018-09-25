@@ -10,7 +10,7 @@ export const db = new NeDB({
   autoload: true
 });
 
-export function doc(nowDate, projectName, projectId, taskName, taskId, taskInfo) {
+export function doc(nowDate, projectName, projectId, taskName, taskId, taskInfo, timeStart, timeEnd) {
   return {
     user: 'login',
     day: nowDate,
@@ -19,7 +19,7 @@ export function doc(nowDate, projectName, projectId, taskName, taskId, taskInfo)
     task_id: taskId,
     task_name: taskName,
     task_info: taskInfo,
-    time_start: '12 : 00',
-    time_end: '12 : 00'
+    time_start: timeStart,
+    time_end: 'timeEnd'
   }
 }
