@@ -2,8 +2,9 @@ import {nowDate} from '../utils'
 import { db, doc } from '../config';
 
 export default store => next => action => {
-  const {writeFile, payload, currentTime} = action;
+  const {writeFile, payload, currentTime, generateId} = action;
   if (!writeFile) return next(action);
+
   if(writeFile === 'start') {
 
     db.loadDatabase(function (error) {
@@ -14,21 +15,28 @@ export default store => next => action => {
       console.log('INFO: local database loaded successfully.');
     });
 
+    let id = generateId;
     let projectName = payload.projectName;
     let projectId = payload.projectId;
     let taskName = payload.taskName;
     let taskId = payload.taskId;
     let taskInfo = payload.taskInfo;
     let timeStart = currentTime;
+    let timeEnd = currentTime;
+
+    console.log('IDIDIDIDIDID')
+    console.log(id)
 
     db.insert(doc(
+      id,
       nowDate,
       projectName,
       projectId,
       taskName,
       taskId,
       taskInfo,
-      timeStart
+      timeStart,
+      timeEnd
     ), function(error, newDoc) {
       if (error) {
         console.log('ERROR: saving document. Caused by: ' + error);
@@ -37,16 +45,13 @@ export default store => next => action => {
       console.log('INFO: successfully saved document: ' + JSON.stringify(newDoc));
     });
 
-      next({...action, writeFile: '123'});
-    }
-
-  if(writeFile === 'synchro') {
-      console.log('middleware synchro 123');
-      next({...action, writeFile: '123'});
+      next({...action, generateId: id});
     }
 
   if(writeFile === 'end') {
-      console.log('middleware stop 123');
+    console.log('END END END');
+
+    let timeEnd = payload.idFile;
 
     db.loadDatabase(function (error) {
       if (error) {
@@ -54,17 +59,11 @@ export default store => next => action => {
         throw error;
       }
       console.log('INFO: local database loaded successfully.');
-      console.log('*********');
-      console.log(currentTime);
     });
 
-    db.update({ time_end: 'timeEnd' }, { $set: { time_end: currentTime } }, { multi: true }, function (error) {
+    db.update({ _id: timeEnd }, { $set: { time_end: currentTime } }, {}, function (error) {
       if(!error) {
         console.log("updated");
-        console.log('*********');
-        console.log(currentTime);
-        console.log('*********');
-        console.log(currentTime);
       }
     });
 

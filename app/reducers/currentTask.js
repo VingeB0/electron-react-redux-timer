@@ -5,7 +5,10 @@ export default (currentTask = [], action) => {
 
   switch (type) {
     case SELECT_TASK:
-      return payload.task;
+      return {
+        ...payload.task,
+        isDisabled: payload.isDisabled
+      }
   }
   return currentTask;
 }

@@ -7,9 +7,6 @@ import {
   SELECT_PROJECT,
   SELECT_TASK,
   LOAD_TASKS_BY_PROJECT,
-  START_WRITE_TO_FILE,
-  SYNCHRO_WRITE_TO_FILE,
-  END_WRITE_TO_FILE,
   START,
   FAIL,
   SUCCESS
@@ -19,16 +16,18 @@ export function startTimer(projectName, projectId, taskName, taskId, taskInfo) {
   return {
     type: START_TIMER,
     currentTime: true,
+    generateId: true,
     writeFile: 'start',
     payload: {projectName, projectId, taskName, taskId, taskInfo}
   }
 }
 
-export function stopTimer() {
+export function stopTimer(idFile) {
   return {
     type: STOP_TIMER,
     currentTime: true,
-    writeFile: 'end'
+    writeFile: 'end',
+    payload: {idFile}
   }
 }
 
@@ -46,17 +45,17 @@ export function loadAllTasks() {
   }
 }
 
-export function selectProject(project) {
+export function selectProject(project, isDisabled) {
   return {
     type: SELECT_PROJECT,
-    payload: {project}
+    payload: {project, isDisabled}
   }
 }
 
-export function selectTask(task) {
+export function selectTask(task, isDisabled) {
   return {
     type: SELECT_TASK,
-    payload: {task}
+    payload: {task, isDisabled}
   }
 }
 
@@ -66,12 +65,3 @@ export function loadTasksByProject(tasksId) {
     payload: {tasksId}
   }
 }
-
-export function synchroWriteToFile(endTime) {
-  return {
-    type: SYNCHRO_WRITE_TO_FILE,
-    writeFile: 'synchro',
-    payload: {endTime}
-  }
-}
-

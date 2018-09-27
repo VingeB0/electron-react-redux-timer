@@ -6,3 +6,5 @@ let month = now.getMonth();
 let day = now.getDay();
 
 export const nowDate = formatTime(day) + '.' + formatTime(month) + '.' + year;
+
+export const generateId = (Date.now() + Math.random()).toString();

@@ -1,25 +1,22 @@
 // @flow
 import React, { Component } from 'react';
 import styles from './styles.css';
-import {stopTimer, startTimer, startWriteToFile, synchroWriteToFile, endWriteToFile} from '../../actions';
+import {stopTimer, startTimer, selectTask, selectProject} from '../../actions';
 import {formatTime} from '../../utils'
 import {connect} from 'react-redux'
 import UpdateBtn from './UpdateBtn'
 import SelectProject from './SelectProject'
 import SelectTask from './SelectTask'
-import { db, doc } from '../../config';
 
 class TabTimer extends Component<Props> {
   props: Props;
 
   state = {
     timerBtn: 'pause',
-    totalSeconds: 0,
-    count: 0
+    totalSeconds: 0
   };
 
   handleTimer = ev => {
-    // console.log('handleTimer');
     this.setState({
       timerBtn: this.state.timerBtn === 'start' ? 'pause' : 'start'
     });
@@ -27,7 +24,7 @@ class TabTimer extends Component<Props> {
   };
 
   handleStartTimer = () => {
-    const { startTimer, stopTimer, currentProject, currentTask, timer } = this.props;
+    const { startTimer, stopTimer, currentProject, currentTask, timer, selectProject, selectTask } = this.props;
     startTimer(
       currentProject.label,
       currentProject.value,
@@ -36,97 +33,37 @@ class TabTimer extends Component<Props> {
       currentTask.info,
       timer.time_start
     );
-    console.log(this.props)
-    console.log('start timer');
     this.intervalTimer = setInterval(() => {
-      // console.log(this.state);
       this.setState({
         totalSeconds: this.state.totalSeconds + 1
       })
     }, 1000);
 
     this.intervalWriteFile = setInterval(() => {
-      console.log(this.state);
-      stopTimer();
+      const id = this.props.timer.generateId;
+      stopTimer(id);
     }, 10000);
 
-    console.log('*********************************')
-    console.log(timer)
-    console.log(timer.time_start)
-    console.log(this.props.timer.time_start)
-    console.log('*********************************')
+    selectProject(null, true);
+    selectTask(null, true);
   };
 
   handleStopTimer = () => {
-    const { stopTimer, endWriteToFile } = this.props;
+    const { stopTimer, selectProject, selectTask } = this.props;
     stopTimer();
-    console.log('stop timer');
     clearInterval(this.intervalTimer);
     clearInterval(this.intervalWriteFile);
     this.setState({
       totalSeconds: 0
     });
+
+    selectProject(null, null);
+    selectTask(null, null);
   };
-
-  handleUpp = () => {
-    var doc = { field1: 0
-    };
-
-    db.insert(doc, function (err, newDoc) {
-    });
-
-    db.loadDatabase(function (error) {
-      if (error) {
-        console.log('FATAL: local database could not be loaded. Caused by: ' + error);
-        throw error;
-      }
-      console.log('INFO: local database loaded successfully.');
-      console.log('*********');
-    });
-    console.log(this.state.count);
-
-    db.find({}, function (err, docs) {
-      if(!err) {
-        console.log(docs);
-      }
-    });
-  }
-
-  handleUp = () => {
-    db.loadDatabase(function (error) {
-      if (error) {
-        console.log('FATAL: local database could not be loaded. Caused by: ' + error);
-        throw error;
-      }
-      console.log('INFO: local database loaded successfully.');
-      console.log('*********');
-    });
-    console.log(this.state.count);
-    let file = this.state.count;
-    // db.update({ planet: 'Jupiter' }, { planet: 'Pluton'}, {}, function (err, numReplaced) {
-
-      db.update({ field1: this.state.count + 1 }, { field1: this.state.count + 1 }, {multi: true}, function (error) {
-      if(!error) {
-        console.log("updated");
-        console.log('*********');
-      }
-    });
-
-    db.find({}, function (err, docs) {
-      if(!err) {
-        console.log(docs);
-      }
-    });
-
-    this.setState({
-      count: this.state.count + 1
-    });
-    console.log('****************************')
-    console.log(this.state.count)
-  }
 
   render() {
     // console.log('TAB TIMER RENDERED');
+    // console.log(this.props.timer.id)
     const {
       isOpen
     } = this.props;
@@ -147,7 +84,10 @@ class TabTimer extends Component<Props> {
             {`${formatTime(hours)} : ${formatTime(minutes)} : ${formatTime(seconds)}`}
           </div>
           <div className={styles.timer__controls}>
-            <button onClick={this.handleTimer}>
+            <button onClick={this.handleTimer}
+                    style={this.props.currentTask.isDisabled === false ? { backgroundColor:'red'} : {backgroundColor : 'green'}}
+                    disabled={this.props.currentTask.isDisabled === false || this.state.timerBtn === 'start' ? false : true}
+            >
               {timerBtn === 'start' ? (
                 <i className="far fa-pause-circle"></i>
               ) : (
@@ -157,19 +97,11 @@ class TabTimer extends Component<Props> {
           </div>
         </div>
 
-        <button onClick={this.handleUpp}>
-          <h1>QQQ create</h1>
-        </button>
-
-        <button onClick={this.handleUp}>
-          <h1>QQQ</h1>
-        </button>
-
         <UpdateBtn/>
 
-        <SelectProject/>
+        <SelectProject isDisabled={!this.props.currentProject.label}/>
 
-        <SelectTask/>
+        <SelectTask isDisabled={this.props.currentProject.label}/>
 
         <div className={styles.tasks}>
           <div className={styles.tasks__today}>
@@ -251,4 +183,4 @@ export default connect((state) => ({
   currentTask: state.currentTask,
   timer: state.timer
 }),
-{stopTimer, startTimer, startWriteToFile, synchroWriteToFile, endWriteToFile})(TabTimer)
+{stopTimer, startTimer, selectTask, selectProject})(TabTimer)

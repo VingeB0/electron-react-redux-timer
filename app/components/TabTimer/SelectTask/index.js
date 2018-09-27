@@ -21,18 +21,18 @@ class SelectTask extends Component<Props> {
 
   handleChange = (selected) => {
     const { selectTask } = this.props;
-    selectTask(selected);
+    selectTask(selected, false);
   };
 
   render() {
-    console.log('select task rendered');
+    // console.log('select task rendered');
     const {
       tasks
     } = this.props;
 
     const {
-      isClearable,
       isSearchable,
+      isClearable
     } = this.state;
 
     const customStyles = {
@@ -56,15 +56,20 @@ class SelectTask extends Component<Props> {
       };
     });
 
+    // console.log('QWE TASK')
+    // console.log(this.props)
+    // console.log(!this.props.isDisabled && true)
+
     return (
       <div className={styles.selectTask}>
         <Select
+          // value={this.props.currentTask.isDisabled === null ? null : this.props.currentTask.label}
           options={selectOptions}
           defaultValue={selectOptions[0]}
           styles={customStyles}
           placeholder="Select task"
-          isClearable={isClearable}
           isSearchable={isSearchable}
+          isDisabled={this.props.currentTask.isDisabled ? true : false}
           name="task"
           onChange={this.handleChange}
         />
@@ -75,7 +80,8 @@ class SelectTask extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks.groupedTasks
+    tasks: state.tasks.groupedTasks,
+    currentTask: state.currentTask
   };
 }
 

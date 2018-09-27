@@ -21,8 +21,12 @@ class SelectProject extends Component<Props> {
   handleChange = (selected) => {
     const { selectProject, loadTasksByProject } = this.props;
     // console.log(selected);
-    selectProject(selected);
+    selectProject(selected, false);
     loadTasksByProject(selected.tasksId);
+
+    console.log(']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]')
+    console.log(selected.label)
+    console.log(this.state)
   };
 
   render() {
@@ -56,16 +60,20 @@ class SelectProject extends Component<Props> {
       };
     });
 
+    // console.log('QWE PROJECT')
+    // console.log(this.props)
+
     return (
       <div className={styles.selectProject}>
         <Select
+          // value={this.props.currentProject.isDisabled === null ? null : this.state.selectedTask}
           options={selectOptions}
           defaultValue={selectOptions[0]}
           styles={customStyles}
           placeholder="Select project"
-          isClearable={isClearable}
           isSearchable={isSearchable}
           name="project"
+          isDisabled={this.props.currentProject.isDisabled ? true : false}
           onChange={this.handleChange}
         />
       </div>
@@ -74,7 +82,8 @@ class SelectProject extends Component<Props> {
 }
 
 export default connect(state => ({
-    projects: state.projects
+    projects: state.projects,
+    currentProject: state.currentProject
   }),
   {
     loadAllProjects,

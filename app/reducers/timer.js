@@ -7,13 +7,14 @@ const defaultTimerState = {
 };
 
 export default function (timerState = defaultTimerState, action) {
-  const {type, currentTime} = action;
+  const {type, currentTime, generateId} = action;
 
   switch (action.type) {
     case START_TIMER:
       return {
         ...timerState,
-        time_start: currentTime
+        time_start: currentTime,
+        generateId: generateId
       };
     case STOP_TIMER:
       return {

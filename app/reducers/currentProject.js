@@ -5,7 +5,12 @@ export default (currentProject = [], action) => {
 
   switch (type) {
     case SELECT_PROJECT:
-      return payload.project;
+      console.log('PAYLOAD')
+      console.log(payload)
+      return {
+        ...payload.project,
+        isDisabled: payload.isDisabled
+      };
   }
   return currentProject;
 }

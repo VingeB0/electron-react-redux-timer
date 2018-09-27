@@ -10,6 +10,7 @@ import type { counterStateType } from '../reducers/types';
 import currentTime from "../middlewares/currentTime.js";
 import api from "../middlewares/api.js";
 import writeFile from "../middlewares/writeFile.js";
+import generateId from "../middlewares/generateId.js";
 
 const history = createHashHistory();
 
@@ -24,6 +25,7 @@ const configureStore = (initialState?: counterStateType) => {
   // Custom Middleware
   middleware.push(api);
   middleware.push(currentTime);
+  middleware.push(generateId);
   middleware.push(writeFile);
 
   // Logging Middleware
